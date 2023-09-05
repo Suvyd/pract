@@ -1,0 +1,38 @@
+#include <stdio.h>
+#include <math.h>
+
+int countIntersectionPoints(int x1, int y1, int r1, int x2, int y2, int r2) {
+    // Відстань між центрами кола
+    double distance = sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
+
+    // Перевірка випадків і підрахунок кількості точок перетину
+    if (distance > r1 + r2) {
+        return 0;  // Кола не перетинаються
+    } else if (distance < abs(r1 - r2)) {
+        return 0;  // Одне коло міститься всередині іншого кола
+    } else if (distance == 0 && r1 == r2) {
+        return -1;  // Кола співпадають, точок перетину нескінченно багато
+    } else if (distance == r1 + r2 || distance == abs(r1 - r2))
+{
+        return 1;  // Одне коло дотикається зовнішньо другого кола
+    } else
+{
+        return 2;  // Кола перетинаються у двох точках
+    }
+}
+
+int main() {
+    SetConsoleCP(1251);
+    SetConsoleOutputCP(1251);
+    printf("Bohdan Suvyd\n");
+    int x1, y1, r1, x2, y2, r2;
+    printf("Введіть координати та радіуси першого кола (x1, y1, r1): ");
+    scanf("%d %d %d", &x1, &y1, &r1);
+    printf("Введіть координати та радіуси другого кола (x2, y2, r2): ");
+    scanf("%d %d %d", &x2, &y2, &r2);
+
+    int result = countIntersectionPoints(x1, y1, r1, x2, y2, r2);
+    printf("Кількість точок перетину: %d\n", result);
+
+    return 0;
+}
