@@ -1,0 +1,50 @@
+#include <stdio.h>
+
+// Рекурсивна функція для обчислення факторіалу
+int factorial(int n) {
+    if (n == 0 || n == 1) {
+        return 1;
+    } else {
+        return n * factorial(n - 1);
+    }
+}
+
+// Функція для обчислення кількості анаграм
+int countAnagrams(char word[]) {
+    int count[26] = {0};  // Масив для збереження кількості входжень кожної літери
+    int n = 0;  // Загальна кількість букв у слові
+
+    // Рахуємо кількість входжень кожної літери у слові
+    for (int i = 0; word[i] != '\0'; i++) {
+        count[word[i] - 'A']++;
+        n++;
+    }
+
+    // Обчислюємо кількість анаграм за формулою
+    int numerator = factorial(n);
+    int denominator = 1;
+
+    // Обчислюємо множник у знаменнику формули
+    for (int i = 0; i < 26; i++) {
+        if (count[i] > 1) {
+            denominator *= factorial(count[i]);
+        }
+    }
+
+    int result = numerator / denominator;
+    return result;
+}
+
+int main() {
+    SetConsoleCP(1251);
+    SetConsoleOutputCP(1251);
+    printf("Bohdan Suvyd\n");
+    char word[15];
+    printf("Введіть слово: ");
+    scanf("%s", word);
+
+    int result = countAnagrams(word);
+    printf("Кількість анаграм: %d\n", result);
+
+    return 0;
+}
