@@ -1,0 +1,40 @@
+#include <stdio.h>
+
+// Функція для обчислення НСД (алгоритм Евкліда)
+int gcd(int a, int b) {
+    if (b == 0)
+        return a;
+    else
+        return gcd(b, a % b);
+}
+
+// Функція для обчислення НСК двох чисел
+int lcm(int a, int b) {
+    return (a * b) / gcd(a, b);
+}
+
+int main() {
+    printf("Bohdan Suvyd\n");
+    int n;
+    scanf("%d", &n);
+
+    int numbers[n];
+    int i;
+
+    // Зчитування чисел з вхідного рядка
+    for (i = 0; i < n; i++) {
+        scanf("%d", &numbers[i]);
+    }
+
+    // Ініціалізація НСК значенням першого числа
+    int result = numbers[0];
+
+    // Знаходження НСК всіх чисел
+    for (i = 1; i < n; i++) {
+        result = lcm(result, numbers[i]);
+    }
+
+    printf("%d\n", result);
+
+    return 0;
+}
