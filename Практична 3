@@ -1,0 +1,48 @@
+#define _CRT_SECURE_NO_DEPRECATE
+#include <stdio.h>
+#include <locale.h>
+
+
+long long countNumbers(int digits) {
+    long long dp[digits + 1][10];
+    for (int i = 0; i <= digits; i++) {
+        for (int j = 0; j < 10; j++) {
+            dp[i][j] = 0;
+        }
+    }
+
+    // Базові значення
+    dp[1][5] = 1;
+    dp[1][9] = 1;
+
+    for (int i = 2; i <= digits; i++) {
+      for (int j = 5; j < 10; j++) {
+       for (int k = 5; k < 10; k++) {
+            if (k != j && k != j - 1) {
+           dp[i][j] += dp[i - 1][k];
+            }
+        }
+      }
+    }
+
+    long long totalCount = 0;
+    for (int j = 5; j < 10; j++) {
+        totalCount += dp[digits][j];
+    }
+  return totalCount;
+}
+
+int main()
+{
+    SetConsoleCP(1251);
+    SetConsoleOutputCP(1251);
+    printf("Bohdan Suvyd\n");
+    int digits;
+    printf("Введіть кількість розрядів: ");
+    scanf("%d", &digits);
+
+    long long result = countNumbers(digits);
+    printf("Кількість чисел з %d розрядами: %lld\n", digits, result);
+
+    return 0;
+}
