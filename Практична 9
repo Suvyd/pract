@@ -1,0 +1,44 @@
+#include <stdio.h>
+#include <limits.h>
+
+#define INF INT_MAX
+
+int minSteps(int x, int y) {
+    int dp[y + 1];
+
+    // Ініціалізація масиву dp
+    for (int i = 0; i <= y; i++) {
+        dp[i] = INF;
+    }
+
+    dp[x] = 0;  // Мінімальна кількість кроків для досягнення числа x дорівнює 0
+
+    // Обчислення мінімальної кількості кроків
+    for (int i = x; i < y; i++) {
+        if (dp[i] != INF) {
+            dp[i + 1] = (dp[i + 1] < dp[i] + 1) ? dp[i + 1] : dp[i] + 1;
+            if (i * 2 <= y) {
+                dp[i * 2] = (dp[i * 2] < dp[i] + 1) ? dp[i * 2] : dp[i] + 1;
+            }
+            if ((i + 1) * 2 - 1 <= y) {
+                dp[(i + 1) * 2 - 1] = (dp[(i + 1) * 2 - 1] < dp[i] + 2) ? dp[(i + 1) * 2 - 1] : dp[i] + 2;
+            }
+        }
+    }
+
+    return dp[y];
+}
+
+int main() {
+    SetConsoleCP(1251);
+    SetConsoleOutputCP(1251);
+    printf("Bohdan Suvyd\n");
+    int x, y;
+    printf("Введіть значення x та y: ");
+    scanf("%d %d", &x, &y);
+
+    int result = minSteps(x, y);
+    printf("Мінімальна кількість кроків: %d\n", result);
+
+    return 0;
+}
